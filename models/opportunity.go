@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Opportunity representa uma vaga ou oportunidade cadastrada no sistema
 type Opportunity struct {
 	ID          uint           `gorm:"primaryKey" json:"id"`
 	Title       string         `json:"title" validate:"required,min=3,max=100"`

@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// OpportunityController interface para handlers HTTP
 type OpportunityController interface {
 	Create(ctx *gin.Context)
 	Get(ctx *gin.Context)
@@ -22,7 +21,6 @@ type opportunityController struct {
 	service services.OpportunityService
 }
 
-// NewOpportunityController cria um novo controller
 func NewOpportunityController(service services.OpportunityService) OpportunityController {
 	return &opportunityController{service: service}
 }

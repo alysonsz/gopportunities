@@ -8,7 +8,6 @@ import (
 	"github.com/alysonsz/gopportunities.git/repositories"
 )
 
-// OpportunityService define métodos para regras de negócio
 type OpportunityService interface {
 	CreateOpportunity(opportunity *models.Opportunity) error
 	GetOpportunity(id uint) (*models.Opportunity, error)
@@ -21,7 +20,6 @@ type opportunityService struct {
 	repo repositories.OpportunityRepository
 }
 
-// NewOpportunityService instancia um novo serviço
 func NewOpportunityService(repo repositories.OpportunityRepository) OpportunityService {
 	return &opportunityService{repo: repo}
 }

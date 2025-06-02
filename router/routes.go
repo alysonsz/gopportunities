@@ -1,44 +1,34 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/alysonsz/gopportunities.git/controllers"
+	"github.com/alysonsz/gopportunities.git/models"
+	"github.com/alysonsz/gopportunities.git/repositories"
+	"github.com/alysonsz/gopportunities.git/services"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
 
 func initializeRoutes(router *gin.Engine) {
+	db, err := gorm.Open(sqlite.Open("gopportunities.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	// Migração automática da tabela Opportunity
+	db.AutoMigrate(&models.Opportunity{})
+
+	opportunityRepo := repositories.NewOpportunityRepository(db)
+	opportunityService := services.NewOpportunityService(opportunityRepo)
+	opportunityController := controllers.NewOpportunityController(opportunityService)
+
 	v1 := router.Group("/api/v1")
-	router.Use(func(context *gin.Context) {
-		if context.Query("status") != "open" {
-			context.JSON(400, gin.H{
-				"message": "API is closed at the moment. Please check back later. Thank you!",
-			})
-			context.Abort()
-			return
-		}
-		context.Next()
-	})
 	{
-		v1.GET("/opening", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "Opening API",
-			})
-		})
-		v1.POST("/posting", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "Posting API",
-			})
-		})
-		v1.DELETE("/deleting", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "Deleting API",
-			})
-		})
-		v1.PUT("/puting", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "Puting API",
-			})
-		})
-		v1.GET("/openings", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "openings API",
-			})
-		})
+		v1.POST("/opportunities", opportunityController.Create)
+		v1.GET("/opportunities/:id", opportunityController.Get)
+		v1.GET("/opportunities", opportunityController.GetAll)
+		v1.PUT("/opportunities/:id", opportunityController.Update)
+		v1.DELETE("/opportunities/:id", opportunityController.Delete)
 	}
 }

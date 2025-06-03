@@ -65,6 +65,7 @@ O Gopportunities API é uma aplicação desenvolvida em Golang, com foco em forn
 
 ### 🧩 Organização do Projeto
 
+```
 gopportunities/
 ├── authentication/
 │   └── authJwt.go
@@ -98,6 +99,7 @@ gopportunities/
 │   └── swagger docs (gerados com swag init)
 ├── main.go
 └── README.md
+```
 
 ### 🔐 Autenticação JWT
 

@@ -1,9 +1,9 @@
-📑 Gopportunities API
-📌 Descrição do Projeto
+# 📑 Gopportunities API
+### 📌 Descrição do Projeto
 
 O Gopportunities API é uma aplicação desenvolvida em Golang, com foco em fornecer um sistema robusto de notificações de vagas de emprego em tempo real. Utilizando boas práticas de arquitetura MVC, JWT para autenticação, e SSE (Server-Sent Events) para comunicação em tempo real, a API resolve o problema comum de usuários perderem oportunidades por atualizações tardias.
 
-🚀 Objetivos do Projeto
+### 🚀 Objetivos do Projeto
 
   • Entregar atualizações instantâneas sobre novas oportunidades de emprego usando SSE.
 
@@ -15,9 +15,9 @@ O Gopportunities API é uma aplicação desenvolvida em Golang, com foco em forn
 
   • Demonstrar domínio em integração de tecnologias como GORM, Gin e Swagger.
 
-🛠️ Tecnologias Utilizadas
+### 🛠️ Tecnologias Utilizadas
 
-Backend:
+**Backend**:
 
   • Golang
 
@@ -33,7 +33,7 @@ Backend:
 
   • SSE (Server-Sent Events)
 
-Padrões e Conceitos:
+**Padrões e Conceitos**:
 
   • Arquitetura MVC
 
@@ -43,7 +43,7 @@ Padrões e Conceitos:
 
   • Comunicação real-time com SSE
 
-📚 Funcionalidades Principais
+**📚 Funcionalidades Principais**:
 
   • CRUD de oportunidades de emprego: Criação, leitura, atualização e exclusão.
 
@@ -55,7 +55,7 @@ Padrões e Conceitos:
 
   • Documentação completa com Swagger.
 
-🔗 Estrutura das Entidades
+**🔗 Estrutura das Entidades**:
 
   • User: Usuários autenticados, com JWT.
 
@@ -63,7 +63,7 @@ Padrões e Conceitos:
 
   • UserPreference: Preferências configuráveis para notificações (localização, tipo, palavras-chave).
 
-🧩 Organização do Projeto
+### 🧩 Organização do Projeto
 
 gopportunities/
 ├── authentication/
@@ -99,7 +99,7 @@ gopportunities/
 ├── main.go
 └── README.md
 
-🔐 Autenticação JWT
+### 🔐 Autenticação JWT
 
   • /api/v1/register: Registra um novo usuário.
 
@@ -107,7 +107,7 @@ gopportunities/
 
   • Use o token JWT como Bearer Token no Swagger para acessar rotas protegidas.
 
-📡 Notificações em Tempo Real (SSE)
+### 📡 Notificações em Tempo Real (SSE)
 
   • /api/v1/notifications [GET]
 
@@ -122,19 +122,19 @@ gopportunities/
       const evtSource = new EventSource("http://localhost:3030/api/v1/notifications");
       evtSource.onmessage = (e) => console.log("Nova oportunidade:", e.data);
 
-⚙️ Preferências do Usuário
+### ⚙️ Preferências do Usuário
 
   • /api/v1/preferences [POST]: Define preferências (localização, tipo, palavras-chave).
 
   • /api/v1/preferences [GET]: Recupera as preferências salvas.
 
-📑 Documentação Swagger
+### 📑 Documentação Swagger
 
   • Acesse http://localhost:3030/swagger/index.html
 
   • Explore e teste todas as rotas (incluindo JWT e SSE).
 
-📈 Futuras Implementações
+### 📈 Futuras Implementações
 
   • Migração do SQLite para um banco escalável (PostgreSQL, MySQL).
 
@@ -144,7 +144,7 @@ gopportunities/
 
   • Deploy com Docker e Kubernetes.
 
-📌 Como Rodar o Projeto
+### 📌 Como Rodar o Projeto
 
   • Clone o repositório.
 
@@ -156,10 +156,10 @@ gopportunities/
 
   • Acesse a API via http://localhost:3030 e o Swagger via /swagger/index.html.
 
-👨‍💻 Autor
+### 👨‍💻 Autor
 
   • Alyson Souza Carregosa 👨‍💻 Back-end Developer
 
-📝 Licença
+### 📝 Licença
 
 Este projeto está disponível sob a licença MIT.

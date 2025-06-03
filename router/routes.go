@@ -20,15 +20,18 @@ func initializeRoutes(router *gin.Engine) {
 
 	db.AutoMigrate(&models.Opportunity{}, &models.User{})
 
-	opportunityRepo := repositories.NewOpportunityRepository(db)
 	userRepo := repositories.NewUserRepository(db)
-	opportunityService := services.NewOpportunityService(opportunityRepo)
 	authService := services.NewAuthService(userRepo)
-	opportunityController := controllers.NewOpportunityController(opportunityService)
+	opportunityRepo := repositories.NewOpportunityRepository(db)
+	notificationService := services.NewNotificationService()
+	opportunityService := services.NewOpportunityService(opportunityRepo, notificationService)
 	authController := controllers.NewAuthController(authService)
+	opportunityController := controllers.NewOpportunityController(opportunityService)
+	notificationController := controllers.NewNotificationController(notificationService)
 
 	v1 := router.Group("/api/v1")
 	{
+		v1.GET("/notifications", notificationController.StreamNotifications)
 		v1.POST("/register", authController.Register)
 		v1.POST("/login", authController.Login)
 

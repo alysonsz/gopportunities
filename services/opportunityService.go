@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/alysonsz/gopportunities.git/models"
@@ -17,11 +18,12 @@ type OpportunityService interface {
 }
 
 type opportunityService struct {
-	repo repositories.OpportunityRepository
+	repo                repositories.OpportunityRepository
+	notificationService *NotificationService
 }
 
-func NewOpportunityService(repo repositories.OpportunityRepository) OpportunityService {
-	return &opportunityService{repo: repo}
+func NewOpportunityService(repo repositories.OpportunityRepository, ns *NotificationService) OpportunityService {
+	return &opportunityService{repo: repo, notificationService: ns}
 }
 
 func (s *opportunityService) CreateOpportunity(opportunity *models.Opportunity) error {
@@ -29,7 +31,12 @@ func (s *opportunityService) CreateOpportunity(opportunity *models.Opportunity) 
 	if opportunity.Status != "open" && opportunity.Status != "closed" {
 		return errors.New("status inválido, deve ser 'open' ou 'closed'")
 	}
-	return s.repo.Create(opportunity)
+
+	err := s.repo.Create(opportunity)
+	if err == nil {
+		s.notificationService.NotifyAll(fmt.Sprintf("Nova oportunidade: %s", opportunity.Title))
+	}
+	return err
 }
 
 func (s *opportunityService) GetOpportunity(id uint) (*models.Opportunity, error) {

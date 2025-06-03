@@ -21,11 +21,14 @@ func initializeRoutes(router *gin.Engine) {
 	db.AutoMigrate(&models.Opportunity{}, &models.User{})
 
 	userRepo := repositories.NewUserRepository(db)
-	authService := services.NewAuthService(userRepo)
+	userPrefRepo := repositories.NewUserPreferenceRepository(db)
 	opportunityRepo := repositories.NewOpportunityRepository(db)
+	authService := services.NewAuthService(userRepo)
+	userPrefService := services.NewUserPreferenceService(userPrefRepo)
 	notificationService := services.NewNotificationService()
 	opportunityService := services.NewOpportunityService(opportunityRepo, notificationService)
 	authController := controllers.NewAuthController(authService)
+	userPrefController := controllers.NewUserPreferenceController(userPrefService)
 	opportunityController := controllers.NewOpportunityController(opportunityService)
 	notificationController := controllers.NewNotificationController(notificationService)
 
@@ -38,6 +41,8 @@ func initializeRoutes(router *gin.Engine) {
 		authRoutes := v1.Group("/")
 		authRoutes.Use(authentication.AuthJwt())
 		{
+			authRoutes.POST("/preferences", userPrefController.SetPreference)
+			authRoutes.GET("/preferences", userPrefController.GetPreference)
 			authRoutes.POST("/opportunities", opportunityController.Create)
 			authRoutes.GET("/opportunities/:id", opportunityController.Get)
 			authRoutes.GET("/opportunities", opportunityController.GetAll)
